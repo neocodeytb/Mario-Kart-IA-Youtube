@@ -101,7 +101,7 @@ class Game(ShowBase):
 
     def playMusic(self):
         pygame.mixer.init()
-        pygame.mixer.music.load(r'C:\Users\Garric louis\Downloads\Mario-Kart-IA-Youtube-main\Mario-Kart-IA-Youtube-main\assets\music.wav')
+        pygame.mixer.music.load(r'assets\music.mp3')
         pygame.mixer.music.play(-1)  # Boucle indéfiniment
 
 
