@@ -1,6 +1,7 @@
 from direct.showbase.ShowBase import ShowBase
-from panda3d.core import AmbientLight,DirectionalLight,WindowProperties,LPoint3f,CollisionTraverser,CollisionHandlerQueue,CollisionPolygon,CollisionNode,CollisionSegment
+from panda3d.core import AmbientLight,DirectionalLight,WindowProperties,Filename,LPoint3f,CollisionTraverser,CollisionHandlerQueue,CollisionPolygon,CollisionNode,CollisionSegment
 from math import sin,cos
+from direct.gui.DirectGui import *
 from utils import degToRad
 from panda3d.core import Point3,GeomVertexFormat,NodePath,Texture,TextureStage,CardMaker,CollisionBox,BitMask32
 import neat
@@ -9,6 +10,9 @@ import pickle
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
+from playsound import playsound
+import pygame
+import threading
 
 class Player():
     def __init__(self,x,y,z,model,name,ai,cshow):
@@ -66,6 +70,11 @@ class Game(ShowBase):
         self.initLights()
         self.initControls()
         self.initMap()
+        self.startMusic()
+        self.setupWindowProperties()
+
+
+       
 
         if self.sim:
             self.initNeat()
@@ -73,6 +82,28 @@ class Game(ShowBase):
         else:
             self.initControlledGame()
             self.playControlledGame()
+
+
+        
+
+
+    def setupWindowProperties(self):
+        wp = WindowProperties()
+        wp.setTitle("Mariokart-AI")
+        wp.setIconFilename(Filename("assets/logo.ico"))
+        self.win.requestProperties(wp)
+
+
+
+    def startMusic(self):
+        music_thread = threading.Thread(target=self.playMusic)
+        music_thread.start()
+
+    def playMusic(self):
+        pygame.mixer.init()
+        pygame.mixer.music.load(r'C:\Users\Garric louis\Downloads\Mario-Kart-IA-Youtube-main\Mario-Kart-IA-Youtube-main\assets\music.wav')
+        pygame.mixer.music.play(-1)  # Boucle indéfiniment
+
 
     def initControlledGame(self):
 
